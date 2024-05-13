@@ -92,11 +92,11 @@ void buttonActions() {
         keyName = noteNames[keyPosition];
         break;
       case 1:
-      currentChord = currentChord - 1;
-        if (currentChord < 0) {
-          currentChord = numChords - 1;
+      currentScale = currentScale - 1;
+        if (currentScale < 0) {
+          currentScale = numScales - 1;
         }
-        changeChord(currentChord);
+        changeScale(currentScale);
         // drawMenu();
         break;
       
@@ -127,11 +127,11 @@ void buttonActions() {
         keyName = noteNames[keyPosition];
         break;
       case 1:
-        currentChord = currentChord + 1;
-        if (currentChord > numChords - 1) {
-          currentChord = 0;
+        currentScale = currentScale + 1;
+        if (currentScale > numScales - 1) {
+          currentScale = 0;
         }
-        changeChord(currentChord);
+        changeScale(currentScale);
         // drawMenu();
         break;
     }

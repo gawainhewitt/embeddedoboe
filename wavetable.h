@@ -49,12 +49,12 @@ byte pentatonic[] = {0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24, 26};
 byte majorBlues[] = {0, 2, 3, 4, 7, 9, 12, 14, 15, 16, 19, 21}; 
 byte minorBlues[] = {0, 3, 5, 6, 7, 10, 12, 15, 17, 18, 19, 22}; 
 
-byte chord[] = {0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19}; // default to major
+byte scale[] = {0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19}; // default to major
 
-int currentChord = 0;
-int numChords = 5;
+int currentScale = 0;
+int numScales = 5;
 
-String chordTypeName = "Major";
+String scaleTypeName = "Major";
 
 
 void setupAudio() {
@@ -81,51 +81,51 @@ void playSound(int octave, int note) {
     switch(note) 
     {
         case 0:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note]+ octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note]+ octave]);
             envelope1.noteOn();
             break;
         case 1:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
         case 2:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
         case 3:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
         case 4:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
         case 5:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
         case 6:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
         case 7:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
         case 8:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
         case 9:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
         case 10:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
         case 11:
-            wavetable1.playFrequency(freqnotes[keyPosition + chord[note] + octave]);
+            wavetable1.playFrequency(freqnotes[keyPosition + scale[note] + octave]);
             envelope1.noteOn();
             break;
     }
@@ -185,37 +185,37 @@ void stopSound(int octave, int note) {
     }
 }
 
-void changeChord(int chordType) {
+void changeScale(int scaleType) {
     
-    switch(chordType) {
+    switch(scaleType) {
         case 0: 
         for (uint8_t i=0; i < numberOfSensors; i++) {
-        chord[i] = major[i];
-        chordTypeName = "Major";
+        scale[i] = major[i];
+        scaleTypeName = "Major";
         }
         break;
         case 1: 
         for (uint8_t i=0; i < numberOfSensors; i++) {
-        chord[i] = minor[i];
-        chordTypeName = "Minor";
+        scale[i] = minor[i];
+        scaleTypeName = "Minor";
         }
         break;
         case 2: 
         for (uint8_t i=0; i < numberOfSensors; i++) {
-        chord[i] = pentatonic[i];
-        chordTypeName = "Pentatonic";
+        scale[i] = pentatonic[i];
+        scaleTypeName = "Pentatonic";
         }
         break;
         case 3: 
         for (uint8_t i=0; i < numberOfSensors; i++) {
-        chord[i] = majorBlues[i];
-        chordTypeName = "Major Blues";
+        scale[i] = majorBlues[i];
+        scaleTypeName = "Major Blues";
         }
         break;
         case 4: 
         for (uint8_t i=0; i < numberOfSensors; i++) {
-        chord[i] = minorBlues[i];
-        chordTypeName = "Minor Blues";
+        scale[i] = minorBlues[i];
+        scaleTypeName = "Minor Blues";
         }
     }
 }
