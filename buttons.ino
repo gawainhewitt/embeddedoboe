@@ -49,12 +49,12 @@ void volumeUpdate(int knob) {
 
 bool knobChange(float knobVol, float gainTest){
   float sensitivity = 0.01;
-  Serial.print("knob volume ");
-  Serial.println(knobVol);
-  Serial.print("gain ");
-  Serial.println(gainTest);
-  Serial.print("gain + sensitivity ");
-  Serial.println(gainTest + sensitivity);
+  // Serial.print("knob volume ");
+  // Serial.println(knobVol);
+  // Serial.print("gain ");
+  // Serial.println(gainTest);
+  // Serial.print("gain + sensitivity ");
+  // Serial.println(gainTest + sensitivity);
   if (knobVol > gainTest + sensitivity){
     Serial.println("greater");
     return true;

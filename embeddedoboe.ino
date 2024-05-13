@@ -1,5 +1,5 @@
-/*
-A physical, touch sensitive oboe instrument. 
+
+/* A physical, touch sensitive oboe instrument. 
 
 gawainhewitt.co.uk
 https://github.com/gawainhewitt
