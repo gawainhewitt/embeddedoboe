@@ -1,4 +1,6 @@
-#include "Oboe_samples.h"
+// #include "Oboe_samples.h"
+// #include "RolandJV2080Oboe_samples.h"
+#include "YamahaOboe_samples.h"
 
 #include <Audio.h>
 #include <Wire.h>
@@ -11,12 +13,19 @@
 // GUItool: begin automatically generated code
 AudioSynthWavetable      wavetable1;     //xy=287,516
 AudioEffectEnvelope      envelope1;      //xy=425,516
-AudioAmplifier           amp1;           //xy=907,715
+AudioAmplifier           reverb_send;           //xy=517,399
+AudioEffectFreeverb      freeverb1;      //xy=635,432
+AudioMixer4              mixer1;         //xy=834,459
+AudioAmplifier           amp1;           //xy=923,651
 AudioOutputI2S           i2s1;           //xy=1202,720
 AudioConnection          patchCord1(wavetable1, envelope1);
-AudioConnection          patchCord2(envelope1, amp1);
-AudioConnection          patchCord3(amp1, 0, i2s1, 0);
-AudioConnection          patchCord4(amp1, 0, i2s1, 1);
+AudioConnection          patchCord2(envelope1, 0, mixer1, 1);
+AudioConnection          patchCord3(envelope1, reverb_send);
+AudioConnection          patchCord4(reverb_send, freeverb1);
+AudioConnection          patchCord5(freeverb1, 0, mixer1, 0);
+AudioConnection          patchCord6(mixer1, amp1);
+AudioConnection          patchCord7(amp1, 0, i2s1, 0);
+AudioConnection          patchCord8(amp1, 0, i2s1, 1);
 AudioControlSGTL5000     sgtl5000_1;     //xy=515,851
 // GUItool: end automatically generated code
 
@@ -64,7 +73,9 @@ void setupAudio() {
     sgtl5000_1.enable();
     sgtl5000_1.volume(0.5);
 
-    wavetable1.setInstrument(Oboe);
+    // wavetable1.setInstrument(Oboe);
+    // wavetable1.setInstrument(RolandJV2080Oboe);
+    wavetable1.setInstrument(YamahaOboe);
 
     int wavetableAmplitude = 1;
 
@@ -74,7 +85,7 @@ void setupAudio() {
 
     envelope1.attack(attackAmount);
 
-
+    freeverb1.roomsize(0.5);
 }
 
 void playSound(int octave, int note) {
