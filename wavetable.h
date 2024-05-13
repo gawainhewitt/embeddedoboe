@@ -1,5 +1,5 @@
-// #include "Oboe_samples.h"
-// #include "RolandJV2080Oboe_samples.h"
+#include "Oboe_samples.h"
+#include "RolandJV2080Oboe_samples.h"
 #include "YamahaOboe_samples.h"
 
 #include <Audio.h>
@@ -63,7 +63,24 @@ byte scale[] = {0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19}; // default to major
 int currentScale = 0;
 int numScales = 5;
 
+int currentSound = 0;
+int numSounds = 3;
+
 String scaleTypeName = "Major";
+
+void changeSound(int sound) {
+    switch(sound) {
+        case 0:
+            wavetable1.setInstrument(Oboe);
+            break;
+        case 1:
+            wavetable1.setInstrument(RolandJV2080Oboe);
+            break;
+        case 2:
+            wavetable1.setInstrument(YamahaOboe);
+            break;
+    }
+}
 
 
 void setupAudio() {
@@ -73,9 +90,7 @@ void setupAudio() {
     sgtl5000_1.enable();
     sgtl5000_1.volume(0.5);
 
-    // wavetable1.setInstrument(Oboe);
-    // wavetable1.setInstrument(RolandJV2080Oboe);
-    wavetable1.setInstrument(YamahaOboe);
+    changeSound(0);
 
     int wavetableAmplitude = 1;
 
@@ -200,33 +215,38 @@ void changeScale(int scaleType) {
     
     switch(scaleType) {
         case 0: 
-        for (uint8_t i=0; i < numberOfSensors; i++) {
-        scale[i] = major[i];
-        scaleTypeName = "Major";
-        }
-        break;
+            for (uint8_t i=0; i < numberOfSensors; i++) {
+                scale[i] = major[i];
+            }
+            scaleTypeName = "Major";
+            break;
         case 1: 
-        for (uint8_t i=0; i < numberOfSensors; i++) {
-        scale[i] = minor[i];
-        scaleTypeName = "Minor";
-        }
-        break;
+            for (uint8_t i=0; i < numberOfSensors; i++) {
+                scale[i] = minor[i];
+            }
+            scaleTypeName = "Minor";
+            break;
         case 2: 
-        for (uint8_t i=0; i < numberOfSensors; i++) {
-        scale[i] = pentatonic[i];
-        scaleTypeName = "Pentatonic";
-        }
-        break;
+            for (uint8_t i=0; i < numberOfSensors; i++) {
+                scale[i] = pentatonic[i];
+            }
+            scaleTypeName = "Pentatonic";
+            break;
         case 3: 
-        for (uint8_t i=0; i < numberOfSensors; i++) {
-        scale[i] = majorBlues[i];
-        scaleTypeName = "Major Blues";
-        }
-        break;
+            for (uint8_t i=0; i < numberOfSensors; i++) {
+                scale[i] = majorBlues[i];
+            }
+            scaleTypeName = "Major Blues";
+            break;
         case 4: 
-        for (uint8_t i=0; i < numberOfSensors; i++) {
-        scale[i] = minorBlues[i];
-        scaleTypeName = "Minor Blues";
-        }
+            for (uint8_t i=0; i < numberOfSensors; i++) {
+                scale[i] = minorBlues[i];
+            }
+            scaleTypeName = "Minor Blues";
+            break;
     }
 }
+
+
+
+    

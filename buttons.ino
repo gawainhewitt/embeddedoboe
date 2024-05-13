@@ -99,6 +99,13 @@ void buttonActions() {
         changeScale(currentScale);
         // drawMenu();
         break;
+      case 2:
+      currentSound = currentSound - 1;
+        if (currentSound < 0) {
+          currentSound = numSounds - 1;
+        }
+        changeSound(currentSound);
+        break;
       
     }
   }
@@ -132,7 +139,13 @@ void buttonActions() {
           currentScale = 0;
         }
         changeScale(currentScale);
-        // drawMenu();
+        break;
+      case 2:
+      currentSound = currentSound + 1;
+        if (currentSound > numSounds - 1) {
+          currentSound = 0;
+        }
+        changeSound(currentSound);
         break;
     }
   }

@@ -14,7 +14,7 @@ https://github.com/gawainhewitt
 boolean updateDisplayFlag = true;
 
 int activeMenuInput = 0;
-byte menuItems = 2;
+byte menuItems = 3;
 boolean bigMenu = false;
 float gain = 0;
 

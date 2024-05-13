@@ -1,6 +1,6 @@
 #include "RolandJV2080Oboe_samples.h"
 
-static const uint32_t sample_0_RolandJV2080Oboe_RolandJV2080Oboe[65792] = {
+PROGMEM static const uint32_t sample_0_RolandJV2080Oboe_RolandJV2080Oboe[65792] = {
 0xffceffeb,0xff48ff93,0xfea3fef7,0xfe3ffe6b,0xfe29fe30,0xfe3bfe32,0xfe48fe46,0xfe2cfe43,
 0xfde7fe0f,0xfdbffdc1,0xfe16fdd7,0xfec2fe6d,0xff12ff02,0xfea8feef,0xfdd3fe3b,0xfcd1fd52,
 0xfba8fc3c,0xfaa8fb17,0xfa4bfa5f,0xfa5dfa56,0xf9e3fa3f,0xf868f941,0xf673f773,0xf4b7f586,

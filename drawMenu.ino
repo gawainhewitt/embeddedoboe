@@ -20,10 +20,12 @@ void draw() {
     u8g2.print(keyName); 
     
     u8g2.setCursor(1, 20);
-    
+    u8g2.print("Type: "); 
+    u8g2.print(scaleTypeName);
 
     u8g2.setCursor(1, 30);
-    u8g2.print("Type: "); u8g2.print(scaleTypeName);
+    u8g2.print("Sound: "); 
+    u8g2.print(currentSound);
 
     u8g2.setCursor(1, 40);
     
@@ -35,6 +37,6 @@ void draw() {
     int volumeToPrint = static_cast<int>(gain*100);
     u8g2.print("Volume: "); u8g2.print(volumeToPrint);
     
-    u8g2.drawFrame(0, activeMenuInput * 20, 127, 10);
+    u8g2.drawFrame(0, activeMenuInput * 10, 127, 10);
   }
 }
