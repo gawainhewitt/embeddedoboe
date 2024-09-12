@@ -6,7 +6,7 @@ https://github.com/gawainhewitt
 */
 
 #include "constants.h"
-#include "mpr121.h"
+#include "touch.h"
 #include "reboot.h"
 #include <bus1_U8g2lib.h>        // my bus1 adaptation of https://github.com/olikraus/u8g2/blob/master/cppsrc/U8g2lib.h - manages I2C display
 #include "wavetable.h"
@@ -49,26 +49,44 @@ void loop() {
   int knob = analogRead(volumePin); // knob = 0 to 1023
   volumeUpdate(knob); 
   
-  currtouched1 = mprBoard_A.touched();
+  // currtouched1 = mprBoard_D.touched();
 
   if(digitalRead(rebootButton) == LOW){
       Serial.print("reboot");
       doReboot();
   }
 
-  for (uint8_t i=0; i < numberOfSensors; i++) {
-      if ((currtouched1 & _BV(i)) && !(lasttouched1 & _BV(i)) ) {
-      Serial.print(i); Serial.println(" touched of A");
-      playSound(octave, i);
-      }
+  // for (uint8_t i=0; i < numberOfSensors; i++) {
+  //     if ((currtouched1 & _BV(i)) && !(lasttouched1 & _BV(i)) ) {
+  //     Serial.print(i); Serial.println(" touched of D");
+  //     playSound(octave, i);
+  //     }
 
-      if (!(currtouched1 & _BV(i)) && (lasttouched1 & _BV(i)) ) {
-      Serial.print(i); Serial.println(" released of A");
+  //     if (!(currtouched1 & _BV(i)) && (lasttouched1 & _BV(i)) ) {
+  //     Serial.print(i); Serial.println(" released of D");
+  //     stopSound(octave, i);
+  //   }
+  // }
+
+  // lasttouched1 = currtouched1;
+
+  MPR121.updateAll();
+
+  for (int i = 0; i < 12; i++) {
+    if (MPR121.isNewTouch(i)) {
+      Serial.print("electrode ");
+      Serial.print(i, DEC);
+      Serial.println(" was just touched");
+      playSound(octave, i);
+
+    } else if (MPR121.isNewRelease(i)) {
+      Serial.print("electrode ");
+      Serial.print(i, DEC);
+      Serial.println(" was just released");
       stopSound(octave, i);
+
     }
   }
-
-  lasttouched1 = currtouched1;
 
   if (updateDisplayFlag == true) {
       drawMenu();            //update the menu
@@ -77,18 +95,18 @@ void loop() {
 
   return;
 
-    // debugging info, what
-  Serial.print("\t\t\t\t\t\t\t\t\t\t\t\t\t 0x"); Serial.println(mprBoard_A.touched(), HEX);
-  Serial.print("Filt: ");
-  for (uint8_t i=0; i<12; i++) {
-    Serial.print(mprBoard_A.filteredData(i)); Serial.print("\t");
-  }
-  Serial.println();
-  Serial.print("Base: ");
-  for (uint8_t i=0; i<12; i++) {
-    Serial.print(mprBoard_A.baselineData(i)); Serial.print("\t");
-  }
-  Serial.println();
+  //   // debugging info, what
+  // Serial.print("\t\t\t\t\t\t\t\t\t\t\t\t\t 0x"); Serial.println(mprBoard_D.touched(), HEX);
+  // Serial.print("Filt: ");
+  // for (uint8_t i=0; i<12; i++) {
+  //   Serial.print(mprBoard_D.filteredData(i)); Serial.print("\t");
+  // }
+  // Serial.println();
+  // Serial.print("Base: ");
+  // for (uint8_t i=0; i<12; i++) {
+  //   Serial.print(mprBoard_D.baselineData(i)); Serial.print("\t");
+  // }
+  // Serial.println();
   
   // put a delay so it isn't overwhelming
   delay(100);

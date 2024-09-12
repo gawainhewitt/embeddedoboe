@@ -48,7 +48,7 @@ const String noteNames[24]={"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"
 String keyName = "C";
 int keyPosition = 0;
 
-int octave = 36;
+int octave = 48;
 
 const int numberOfSensors = 12;
 
@@ -71,13 +71,13 @@ String scaleTypeName = "Major";
 void changeSound(int sound) {
     switch(sound) {
         case 0:
-            wavetable1.setInstrument(Oboe);
+            wavetable1.setInstrument(YamahaOboe);
             break;
         case 1:
             wavetable1.setInstrument(RolandJV2080Oboe);
             break;
         case 2:
-            wavetable1.setInstrument(YamahaOboe);
+            wavetable1.setInstrument(Oboe);
             break;
     }
 }
