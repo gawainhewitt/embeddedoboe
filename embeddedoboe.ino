@@ -1,4 +1,3 @@
-
 /* A physical, touch sensitive oboe instrument. 
 
 gawainhewitt.co.uk
@@ -25,6 +24,12 @@ float gain = 0;
 #define DOWN 4
 #define NUM_BUTTONS 5
 
+// Sound management variables
+unsigned long soundStopDelay = 50; // milliseconds - you can change this value
+unsigned long lastTouchTime = 0;
+unsigned long lastReleaseTime = 0;
+bool touchedState[12]; // track current state of each electrode
+bool pendingStopAll = false;
 
 U8G2_SSD1306_128X64_NONAME_2_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);   //page buffer = 128bytes (_1_ = 128, _2_ = 256, _F_ = 1024)
 
@@ -39,6 +44,11 @@ void setup() {
     pinMode(volumePin, INPUT);
 
     setupAudio();
+    
+    // Initialize touch state array
+    for (int i = 0; i < 12; i++) {
+        touchedState[i] = false;
+    }
 }
 
 void loop() {
@@ -48,29 +58,16 @@ void loop() {
   
   int knob = analogRead(volumePin); // knob = 0 to 1023
   volumeUpdate(knob); 
-  
-  // currtouched1 = mprBoard_D.touched();
 
   if(digitalRead(rebootButton) == LOW){
       Serial.print("reboot");
       doReboot();
   }
 
-  // for (uint8_t i=0; i < numberOfSensors; i++) {
-  //     if ((currtouched1 & _BV(i)) && !(lasttouched1 & _BV(i)) ) {
-  //     Serial.print(i); Serial.println(" touched of D");
-  //     playSound(octave, i);
-  //     }
-
-  //     if (!(currtouched1 & _BV(i)) && (lasttouched1 & _BV(i)) ) {
-  //     Serial.print(i); Serial.println(" released of D");
-  //     stopSound(octave, i);
-  //   }
-  // }
-
-  // lasttouched1 = currtouched1;
-
   MPR121.updateAll();
+  
+  // Track current touch state
+  bool currentlyTouched = false;
 
   for (int i = 0; i < 12; i++) {
     if (MPR121.isNewTouch(i)) {
@@ -78,14 +75,40 @@ void loop() {
       Serial.print(i, DEC);
       Serial.println(" was just touched");
       playSound(octave, i);
+      
+      touchedState[i] = true;
+      currentlyTouched = true;
+      lastTouchTime = millis();
+      pendingStopAll = false; // Cancel any pending stop
 
     } else if (MPR121.isNewRelease(i)) {
       Serial.print("electrode ");
       Serial.print(i, DEC);
       Serial.println(" was just released");
-      stopSound(octave, i);
-
+      
+      touchedState[i] = false;
     }
+    
+    // Check if any electrode is still touched
+    if (touchedState[i]) {
+      currentlyTouched = true;
+    }
+  }
+  
+  // If no electrodes are touched and we haven't already scheduled a stop
+  if (!currentlyTouched && !pendingStopAll) {
+    lastReleaseTime = millis();
+    pendingStopAll = true;
+  }
+  
+  // Check if we should stop all sounds after delay
+  if (pendingStopAll && !currentlyTouched && (millis() - lastReleaseTime >= soundStopDelay)) {
+    // Stop all sounds
+    for (int i = 0; i < 12; i++) {
+      stopSound(octave, i);
+    }
+    pendingStopAll = false;
+    Serial.println("All sounds stopped after delay");
   }
 
   if (updateDisplayFlag == true) {
@@ -111,3 +134,5 @@ void loop() {
   // put a delay so it isn't overwhelming
   delay(100);
 }
+
+
