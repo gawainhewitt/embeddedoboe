@@ -7,9 +7,6 @@ const uint8_t MPR121_ADDR = 0x5D;
 
 const bool MPR121_DATASTREAM_ENABLE = false;
 
-
-// MPR121 mprBoard_D = MPR121();
-
 uint16_t lasttouched1 = 0;
 uint16_t currtouched1 = 0;
 
